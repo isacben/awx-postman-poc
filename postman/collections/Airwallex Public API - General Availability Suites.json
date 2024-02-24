@@ -1,0 +1,614 @@
+{
+	"info": {
+		"_postman_id": "7fd9e7f4-1b32-401b-a1b7-e81174049e02",
+		"name": "Airwallex Public API - General Availability Suites",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "12794106-7fd9e7f4-1b32-401b-a1b7-e81174049e02"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "API Access",
+					"item": [
+						{
+							"name": "Obtain access token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"bearer_token_expires_at\", JSON.parse(responseBody).expires_at);",
+											"pm.environment.set(\"bearer_token\", JSON.parse(responseBody).token);"
+										],
+										"type": "text/javascript",
+										"id": "18353d02-2ee7-4907-a02b-4f391363dab5"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const clientId = pm.variables.get(\"clientId\");",
+											"const apiKey = pm.variables.get(\"apiKey\");",
+											"",
+											"if (clientId === \"\" || apiKey === \"\") {",
+											"    throw new Error(\"Please set the values for the variables 'clientId' or 'apiKey'.\");",
+											"}"
+										],
+										"type": "text/javascript",
+										"id": "17922146-02a5-4b04-828f-19d03de027ff"
+									}
+								}
+							],
+							"id": "c8050dec-0953-46b2-9fca-5282cf69f4ed",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-client-id",
+										"value": "{{clientId}}"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{apiKey}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/authentication/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"authentication",
+										"login"
+									]
+								},
+								"description": "**POST /api/v1/authentication/login **"
+							},
+							"response": []
+						}
+					],
+					"id": "eb701ef1-fe77-4f6d-9579-4bfa1ec2a75e"
+				}
+			],
+			"id": "4c4ae00d-4843-4bca-9177-6ca2d9c87c31",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						],
+						"id": "e8709397-d105-4501-8df2-fe770621f2f0"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						],
+						"id": "81d5defc-f055-48dd-9a6c-c2e5d3b56f30"
+					}
+				}
+			]
+		},
+		{
+			"name": "Payouts",
+			"item": [
+				{
+					"name": "Beneficiaries",
+					"item": [
+						{
+							"name": "Get list of beneficiaries",
+							"id": "6a80e2ae-7062-41b5-86b5-2f79bfde00bb",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-on-behalf-of",
+										"value": "{{connected_account_id}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{url}}/api/v1/beneficiaries",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"beneficiaries"
+									],
+									"query": [
+										{
+											"key": "bank_account_number",
+											"value": "",
+											"description": "Filter on bank account number of beneficiary",
+											"disabled": true
+										},
+										{
+											"key": "company_name",
+											"value": "",
+											"description": "Filter on company name of beneficiary",
+											"disabled": true
+										},
+										{
+											"key": "entity_type",
+											"value": "",
+											"description": "Filter on entity type of COMPANY or PERSONAL",
+											"disabled": true
+										},
+										{
+											"key": "from_date",
+											"value": "",
+											"description": "The start date of created_at in ISO8601 format (inclusive)",
+											"disabled": true
+										},
+										{
+											"key": "name",
+											"value": "",
+											"description": "Filter on name of beneficiary",
+											"disabled": true
+										},
+										{
+											"key": "nick_name",
+											"value": "",
+											"description": "Filter on nickname of beneficiary",
+											"disabled": true
+										},
+										{
+											"key": "page_num",
+											"value": "",
+											"description": "Page number, starts from 0",
+											"disabled": true
+										},
+										{
+											"key": "page_size",
+											"value": "",
+											"description": "Number of results per page. Default value is 100.",
+											"disabled": true
+										},
+										{
+											"key": "to_date",
+											"value": "",
+											"description": "The end date of created_at in ISO8601 format (inclusive)",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get a beneficiary by ID",
+							"id": "5f4a316f-8d50-4807-be5f-9373ac04eb69",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-on-behalf-of",
+										"value": "{{connected_account_id}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{url}}/api/v1/beneficiaries/:beneficiary_id",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"beneficiaries",
+										":beneficiary_id"
+									],
+									"variable": [
+										{
+											"id": "e1ab6739-e10d-4892-b765-0c8eb3a00671",
+											"key": "beneficiary_id",
+											"value": "{{beneficiary_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a new beneficiary",
+							"id": "1a130d1a-02d2-47f6-aae1-91c9a52a58f3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-on-behalf-of",
+										"value": "{{connected_account_id}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"beneficiary\": {\n        \"address\": {\n            \"city\": \"{{$randomCity}}\",\n            \"country_code\": \"US\",\n            \"postcode\": \"{{$randomInt}}\",\n            \"state\": \"{{$randomCity}}\",\n            \"street_address\": \"{{$randomStreetAddress}}\"\n        },\n        \"bank_details\": {\n            \"account_currency\": \"USD\",\n            \"account_name\": \"{{$randomCompanyName}}\",\n            \"account_number\": \"{{$randomBankAccount}}\",\n            \"bank_country_code\": \"US\",\n            \"bank_name\": \"{{$randomCompanyName}}\",\n            \"swift_code\": \"CHASUS33\"\n        },\n        \"company_name\": \"{{$randomCompanyName}}\",\n        \"entity_type\": \"COMPANY\"\n    },\n    \"payment_methods\": [\n        \"SWIFT\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/beneficiaries/create",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"beneficiaries",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete existing beneficiary",
+							"id": "e7f2ecd1-200c-4f41-8e30-86212948463a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-on-behalf-of",
+										"value": "{{connected_account_id}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{url}}/api/v1/beneficiaries/delete/:beneficiary_id",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"beneficiaries",
+										"delete",
+										":beneficiary_id"
+									],
+									"variable": [
+										{
+											"id": "fbc1bd5e-2cf7-4c62-a224-1f92e6943e75",
+											"key": "beneficiary_id",
+											"value": "{{beneficiary_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update existing beneficiary",
+							"id": "dd65b713-e3ed-45b4-864c-70d0708caa50",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-on-behalf-of",
+										"value": "{{connected_account_id}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"beneficiary\": {\n        \"address\": {\n            \"city\": \"{{$randomCity}}\",\n            \"country_code\": \"US\",\n            \"postcode\": \"{{$randomInt}}\",\n            \"state\": \"{{$randomCity}}\",\n            \"street_address\": \"{{$randomStreetAddress}}\"\n        },\n        \"bank_details\": {\n            \"account_currency\": \"USD\",\n            \"account_name\": \"{{$randomCompanyName}}\",\n            \"account_number\": \"{{$randomBankAccount}}\",\n            \"bank_country_code\": \"US\",\n            \"bank_name\": \"{{$randomCompanyName}}\",\n            \"swift_code\": \"CHASUS33\"\n        },\n        \"company_name\": \"{{$randomCompanyName}}\",\n        \"entity_type\": \"COMPANY\"\n    },\n    \"payment_methods\": [\n        \"SWIFT\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/beneficiaries/update/:beneficiary_id",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"beneficiaries",
+										"update",
+										":beneficiary_id"
+									],
+									"variable": [
+										{
+											"id": "06b0460b-c1fe-45fe-ad74-260190ea4c63",
+											"key": "beneficiary_id",
+											"value": "{{beneficiary_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validate beneficiary",
+							"id": "3c629823-b201-45be-99fe-6ec36b4c43db",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-on-behalf-of",
+										"value": "{{connected_account_id}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"beneficiary\": {\n        \"address\": {\n            \"city\": \"{{$randomCity}}\",\n            \"country_code\": \"US\",\n            \"postcode\": \"{{$randomInt}}\",\n            \"state\": \"{{$randomCity}}\",\n            \"street_address\": \"{{$randomStreetAddress}}\"\n        },\n        \"bank_details\": {\n            \"account_currency\": \"USD\",\n            \"account_name\": \"{{$randomCompanyName}}\",\n            \"account_number\": \"{{$randomBankAccount}}\",\n            \"bank_country_code\": \"US\",\n            \"bank_name\": \"{{$randomCompanyName}}\",\n            \"swift_code\": \"CHASUS33\"\n        },\n        \"company_name\": \"{{$randomCompanyName}}\",\n        \"entity_type\": \"COMPANY\"\n    },\n    \"payment_methods\": [\n        \"SWIFT\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/beneficiaries/validate",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"beneficiaries",
+										"validate"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "d562bcdc-59dc-415f-bb20-1132c1bd46a3",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"let request_url_path = \"/\" + pm.request.url.path.join(\"/\");",
+									"if (!request_url_path.includes(\":beneficiary_id\"))",
+									"    return;",
+									"",
+									"let beneficiary_id = pm.environment.get(\"beneficiary_id\");",
+									"",
+									"// If the variable does not exist or is empty, default it.",
+									"if (typeof beneficiary_id === \"undefined\" || beneficiary_id === \"\") {",
+									"    request_url = BASE_URL + \"/api/v1/beneficiaries\";",
+									"    console.warn(`Environment variable 'beneficiary_id' is not set, calling ${request_url} to default it.`);",
+									"",
+									"    pm.sendRequest({",
+									"        url: request_url,",
+									"        method: \"GET\",",
+									"        header: UTILITY.getRequestHeader()",
+									"    }, function (err, res) {",
+									"        if (res.json().items.length > 0) {",
+									"            console.info(`Defaulting 'beneficiary_id' to the first beneficiary ${res.json().items[0].beneficiary_id}`);",
+									"            pm.variables.set(\"beneficiary_id\", res.json().items[0].beneficiary_id);",
+									"        }",
+									"        else {",
+									"            throw new Error(\"Environment variable 'beneficiary_id' is not set, and cannot set a default, as there is no beneficiary returned.\");",
+									"        }",
+									"    });",
+									"}"
+								],
+								"id": "d75c06a5-7b5b-4d4c-9003-c14f0f9d436d"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								],
+								"id": "68c9deba-6f14-4762-9530-1b990ff28402"
+							}
+						}
+					]
+				}
+			],
+			"id": "83335361-3071-4d87-a086-d2e370f2f759"
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{bearer_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "82c5cffb-b0a3-419d-8611-5f14214cde05",
+				"type": "text/javascript",
+				"exec": [
+					"/************************************************",
+					" * This collection pre-request script runs before the request one.",
+					" ***********************************************/",
+					"",
+					"// Global variables and functions",
+					"BASE_URL = pm.variables.get(\"url\");",
+					"",
+					"UTILITY = {",
+					"    getRequestHeader: function () {",
+					"        if (pm.request.headers.find((x) => x.key === \"x-on-behalf-of\") === undefined) {",
+					"            throw Error(\"Missing 'x-on-behalf-of' in the HTTP Header.\")",
+					"        }",
+					"        else if (pm.request.headers.find((x) => x.key === \"x-on-behalf-of\" && x.disabled === true)) {",
+					"            return { \"Authorization\": \"Bearer \" + pm.environment.get(\"bearer_token\") };",
+					"        }",
+					"        else {",
+					"            let connectedAccountId = pm.request.headers.find((x) => x.key === \"x-on-behalf-of\").value;",
+					"            connectedAccountId = connectedAccountId === \"{{connected_account_id}}\" ? pm.environment.get(\"connected_account_id\") : connectedAccountId;",
+					"",
+					"            return {",
+					"                \"Authorization\": \"Bearer \" + pm.environment.get(\"bearer_token\"),",
+					"                \"x-on-behalf-of\": connectedAccountId",
+					"            };",
+					"        }",
+					"    }",
+					"};",
+					"",
+					"// Initialize environment variables. ",
+					"if (typeof pm.environment.get(\"connected_account_id\") === 'undefined')",
+					"    pm.environment.set(\"connected_account_id\", \"\");",
+					"",
+					"// Test the bearer_token expiry.",
+					"if (\"/\" + pm.request.url.path.join(\"/\") === \"/api/v1/authentication/login\")",
+					"    return;",
+					"",
+					"let loginUrl = BASE_URL + \"/api/v1/authentication/login\";",
+					"console.info(`bearer_token invalid, calling ${loginUrl} to refresh...`);",
+					"",
+					"// Obtain access token, before each request.",
+					"let clientId = pm.variables.get(\"clientId\");",
+					"let apiKey = pm.variables.get(\"apiKey\");",
+					"",
+					"if (clientId === \"\" || apiKey === \"\") {",
+					"    throw new Error(\"Please set the values for the variables 'clientId' or 'apiKey'.\");",
+					"}",
+					"",
+					"pm.sendRequest({",
+					"    url: loginUrl,",
+					"    method: \"POST\",",
+					"    header: {",
+					"        \"x-client-id\": clientId,",
+					"        \"x-api-key\": apiKey",
+					"    }",
+					"}, function (err, res) {",
+					"    pm.environment.set(\"bearer_token_expires_at\", res.json().expires_at);",
+					"    pm.environment.set(\"bearer_token\", res.json().token);",
+					"",
+					"    // pm.sendRequest() is asynchronous, so only execute the function after the bearer_token is set.",
+					"    executeWithValidBearerToken(BASE_URL);",
+					"});",
+					"",
+					"// Encode query parameters, e.g. 2021-12-21T18:50:00+08:00 -> 2021-12-21T18%3A50%3A00%2B08%3A00.",
+					"pm.request.url.query.filter((x) => x.disabled === undefined).forEach((x) => x.value = encodeURIComponent(x.value));",
+					"",
+					"function executeWithValidBearerToken(baseUrl) {",
+					"    if (pm.environment.get(\"connected_account_id\") === \"\") {",
+					"        if (pm.request.headers.find((x) => x.key === \"x-on-behalf-of\" && (x.disabled === undefined || x.disabled === false))) {",
+					"            request_url = baseUrl + \"/api/v1/accounts\";",
+					"            console.warn(`HTTP Header 'x-on-behalf-of' is on, but the environment variable 'connected_account_id' is not set, calling ${request_url} to default it.`);",
+					"",
+					"            pm.sendRequest({",
+					"                url: request_url,",
+					"                method: \"GET\",",
+					"                header: { \"Authorization\": \"Bearer \" + pm.environment.get(\"bearer_token\") }",
+					"            }, function (err, res) {",
+					"                active_account = res.json().items.find((x) => x.status === \"ACTIVE\");",
+					"                if (active_account != undefined) {",
+					"                    console.info(`Defaulting 'connected_account_id' to the first ACTIVE account ${active_account.id}`);",
+					"                    pm.environment.set(\"connected_account_id\", active_account.id);",
+					"                }",
+					"                else {",
+					"                    throw new Error(\"Environment variable 'connected_account_id' is not set, and cannot set a default, as there is no ACTIVE account returned.\");",
+					"                }",
+					"            });",
+					"        }",
+					"    }",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "c6804ce5-5fd6-456f-89cc-3553aa0b1127",
+				"type": "text/javascript",
+				"exec": [
+					"if (pm.request.method === \"POST\") {",
+					"    pm.test(\"Successful POST request\", () => {",
+					"        pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+					"    });",
+					"}",
+					"else {",
+					"    pm.test(\"Status code is 200\", () => {",
+					"        pm.response.to.have.status(200);",
+					"    });",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "0dfff822-8863-4c6f-8bdd-164e7b615553",
+			"key": "clientId",
+			"value": ""
+		},
+		{
+			"id": "fde6099c-8f8f-47b8-8855-015864c32a46",
+			"key": "apiKey",
+			"value": ""
+		},
+		{
+			"id": "6c6bdfd5-12c4-47f8-ba21-8d5059a00485",
+			"key": "url",
+			"value": "https://api-demo.airwallex.com"
+		},
+		{
+			"id": "2919bbd4-9c7d-4f5d-80af-57703a4545b3",
+			"key": "file_url",
+			"value": "https://files-demo.airwallex.com"
+		}
+	]
+}
