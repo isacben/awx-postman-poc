@@ -271,7 +271,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "82c5cffb-b0a3-419d-8611-5f14214cde05",
+				"id": "130caa78-f386-4dd2-8e62-5458f6b12a4a",
 				"type": "text/javascript",
 				"exec": [
 					"/************************************************",
@@ -313,8 +313,8 @@
 					"console.info(`bearer_token invalid, calling ${loginUrl} to refresh...`);",
 					"",
 					"// Obtain access token, before each request.",
-					"let clientId = pm.variables.get(\"clientId\");",
-					"let apiKey = pm.variables.get(\"apiKey\");",
+					"let clientId = pm.environment.get(\"clientId\");",
+					"let apiKey = pm.environment.get(\"apiKey\");",
 					"",
 					"if (clientId === \"\" || apiKey === \"\") {",
 					"    throw new Error(\"Please set the values for the variables 'clientId' or 'apiKey'.\");",
@@ -367,7 +367,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "c6804ce5-5fd6-456f-89cc-3553aa0b1127",
+				"id": "aa5e2fe9-40d9-4d6a-90e2-65741ba4908d",
 				"type": "text/javascript",
 				"exec": [
 					"if (pm.request.method === \"POST\") {",
@@ -386,22 +386,12 @@
 	],
 	"variable": [
 		{
-			"id": "0dfff822-8863-4c6f-8bdd-164e7b615553",
-			"key": "clientId",
-			"value": ""
-		},
-		{
-			"id": "fde6099c-8f8f-47b8-8855-015864c32a46",
-			"key": "apiKey",
-			"value": ""
-		},
-		{
-			"id": "6c6bdfd5-12c4-47f8-ba21-8d5059a00485",
+			"id": "5f34c3a0-eb0c-43d7-a91d-39fb20b41913",
 			"key": "url",
 			"value": "https://api-demo.airwallex.com"
 		},
 		{
-			"id": "2919bbd4-9c7d-4f5d-80af-57703a4545b3",
+			"id": "faff6be7-268c-49b5-b86b-c573c99fc340",
 			"key": "file_url",
 			"value": "https://files-demo.airwallex.com"
 		}
