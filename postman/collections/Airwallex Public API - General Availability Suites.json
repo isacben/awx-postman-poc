@@ -18,27 +18,27 @@
 								{
 									"listen": "test",
 									"script": {
+										"id": "18353d02-2ee7-4907-a02b-4f391363dab5",
 										"exec": [
 											"pm.environment.set(\"bearer_token_expires_at\", JSON.parse(responseBody).expires_at);",
 											"pm.environment.set(\"bearer_token\", JSON.parse(responseBody).token);"
 										],
-										"type": "text/javascript",
-										"id": "18353d02-2ee7-4907-a02b-4f391363dab5"
+										"type": "text/javascript"
 									}
 								},
 								{
 									"listen": "prerequest",
 									"script": {
+										"id": "17922146-02a5-4b04-828f-19d03de027ff",
 										"exec": [
-											"const clientId = pm.variables.get(\"clientId\");",
-											"const apiKey = pm.variables.get(\"apiKey\");",
+											"const clientId = pm.environment.get(\"clientId\");",
+											"const apiKey = pm.environment.get(\"apiKey\");",
 											"",
 											"if (clientId === \"\" || apiKey === \"\") {",
 											"    throw new Error(\"Please set the values for the variables 'clientId' or 'apiKey'.\");",
 											"}"
 										],
-										"type": "text/javascript",
-										"id": "17922146-02a5-4b04-828f-19d03de027ff"
+										"type": "text/javascript"
 									}
 								}
 							],
