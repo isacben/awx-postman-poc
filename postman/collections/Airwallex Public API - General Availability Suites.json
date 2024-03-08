@@ -35,8 +35,8 @@
 											"const apiKey = pm.environment.get(\"apiKey\");",
 											"",
 											"if (clientId === \"\" || apiKey === \"\") {",
-											"    throw new Error(\"Please set the values for the variables 'clientId' or 'apiKey'.\");",
-											"}"
+											"    throw new Error(\"(Obtain access token: Please set the values for the variables 'clientId' or 'apiKey'.\");",
+											"}   "
 										],
 										"type": "text/javascript"
 									}
