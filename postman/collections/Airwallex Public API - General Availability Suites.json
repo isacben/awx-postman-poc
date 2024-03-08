@@ -21,7 +21,11 @@
 										"id": "18353d02-2ee7-4907-a02b-4f391363dab5",
 										"exec": [
 											"pm.environment.set(\"bearer_token_expires_at\", JSON.parse(responseBody).expires_at);",
-											"pm.environment.set(\"bearer_token\", JSON.parse(responseBody).token);"
+											"pm.environment.set(\"bearer_token\", JSON.parse(responseBody).token);",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -35,7 +39,7 @@
 											"const apiKey = pm.environment.get(\"apiKey\");",
 											"",
 											"if (clientId === \"\" || apiKey === \"\") {",
-											"    throw new Error(\"(Obtain access token: Please set the values for the variables 'clientId' or 'apiKey'.\");",
+											"    throw new Error(\"Please set the values for the variables 'clientId' or 'apiKey'.\");",
 											"}   "
 										],
 										"type": "text/javascript"
@@ -120,6 +124,20 @@
 					"item": [
 						{
 							"name": "Get list of beneficiaries",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d04444d4-b253-4037-9dc8-24e4ce7a6c1b",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"id": "6a80e2ae-7062-41b5-86b5-2f79bfde00bb",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
